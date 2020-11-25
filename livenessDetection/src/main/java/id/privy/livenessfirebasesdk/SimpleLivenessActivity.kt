@@ -37,6 +37,8 @@ class SimpleLivenessActivity : AppCompatActivity() {
 
     private lateinit var motionInstructions: Array<String>
 
+    private var count_ver = 0;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_liveness)
@@ -48,13 +50,14 @@ class SimpleLivenessActivity : AppCompatActivity() {
             val b = intent.extras!!
             successText = b.getString(Constant.Keys.SUCCESS_TEXT, getString(R.string.success_text))
             isDebug = b.getBoolean(Constant.Keys.IS_DEBUG, false)
+            blinkInstruction.text = b.getString(Constant.Keys.BLINK_INSTRUCTION, getString(R.string.blink_instruction))
             instructions.text = b.getString(Constant.Keys.INSTRUCTION_TEXT, getString(R.string.instructions))
             motionInstructions = b.getStringArray(Constant.Keys.MOTION_INSTRUCTIONS)
         }
 
         if (PermissionUtil.with(this).isCameraPermissionGranted) {
             createCameraSource()
-            startHeadShakeChallenge()
+            startBlinkChallenge()
         }
         else {
             PermissionUtil.requestPermission(this, 1, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
@@ -63,10 +66,12 @@ class SimpleLivenessActivity : AppCompatActivity() {
         LivenessEventProvider.getEventLiveData().observe(this, Observer {
             it?.let {
                 when {
-                    it.getType() == LivenessEventProvider.LivenessEvent.Type.HeadShake -> {
-                        onHeadShakeEvent()
+//                    it.getType() == LivenessEventProvider.LivenessEvent.Type.HeadShake -> {
+//                        onHeadShakeEvent()
+//                    }
+                    it.getType() == LivenessEventProvider.LivenessEvent.Type.Blink -> {
+                        onBlinkEvent()
                     }
-
                     it.getType() == LivenessEventProvider.LivenessEvent.Type.Default -> {
                         onDefaultEvent()
                     }
@@ -103,16 +108,16 @@ class SimpleLivenessActivity : AppCompatActivity() {
             cameraSource!!.setFacing(CameraSource.CAMERA_FACING_FRONT)
         }
 
-        val motion = Motion.values()[Random().nextInt(Motion.values().size)]
-
-        when (motion) {
-            Motion.Left -> {
-                motionInstruction.text = this.motionInstructions[0]
-            }
-
-            Motion.Right -> {
-                motionInstruction.text = this.motionInstructions[1]
-            }
+//        val motion = Motion.values()[Random().nextInt(Motion.values().size)]
+//
+//        when (motion) {
+//            Motion.Left -> {
+//                motionInstruction.text = this.motionInstructions[0]
+//            }
+//
+//            Motion.Right -> {
+//                motionInstruction.text = this.motionInstructions[1]
+//            }
 //
 //            Motion.Up -> {
 //                Toast.makeText(this, "Look Up", Toast.LENGTH_SHORT).show()
@@ -121,11 +126,12 @@ class SimpleLivenessActivity : AppCompatActivity() {
 //            Motion.Down -> {
 //                Toast.makeText(this, "Look Down", Toast.LENGTH_SHORT).show()
 //            }
-        }
+//        }
 
         visionDetectionProcessor = VisionDetectionProcessor()
-        visionDetectionProcessor!!.isSimpleLiveness(true, this, motion)
+        visionDetectionProcessor!!.isSimpleLiveness(false, this)
         visionDetectionProcessor!!.isDebugMode(isDebug)
+        count_ver=1
 
         cameraSource!!.setMachineLearningFrameProcessor(visionDetectionProcessor)
     }
@@ -162,12 +168,25 @@ class SimpleLivenessActivity : AppCompatActivity() {
         visionDetectionProcessor!!.setVerificationStep(1)
     }
 
+    private fun startBlinkChallenge() {
+        visionDetectionProcessor!!.setVerificationStep(0)
+    }
+
     private fun onHeadShakeEvent() {
         if (!success) {
             success = true
-            motionInstruction.text = successText
+            motionInstruction.text = "HeadShake test berhasil, silakan lakukan blink test"
 
-            visionDetectionProcessor!!.setChallengeDone(true)
+//            visionDetectionProcessor!!.setChallengeDone(true)
+        }
+    }
+
+    private fun onBlinkEvent() {
+        if (!success) {
+            success = true
+            blinkInstruction.text = successText
+
+            onDefaultEvent()
         }
     }
 

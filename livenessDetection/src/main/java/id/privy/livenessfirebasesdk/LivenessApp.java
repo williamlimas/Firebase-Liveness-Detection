@@ -16,11 +16,12 @@ public class LivenessApp {
 
     private Bundle bundle;
 
-    private LivenessApp(Context context, boolean isDebug, String successText, String instructions, String[] motionInstructions) {
+    private LivenessApp(Context context, boolean isDebug, String successText, String instructions, String blinkInstruction, String[] motionInstructions) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constant.Keys.IS_DEBUG, isDebug);
         bundle.putString(Constant.Keys.SUCCESS_TEXT, successText);
         bundle.putString(Constant.Keys.INSTRUCTION_TEXT, instructions);
+        bundle.putString(Constant.Keys.BLINK_INSTRUCTION, blinkInstruction);
         bundle.putStringArray(Constant.Keys.MOTION_INSTRUCTIONS, motionInstructions);
         this.context = context;
         this.bundle = bundle;
@@ -59,6 +60,8 @@ public class LivenessApp {
 
         private String instructions;
 
+        private String blinkInstruction;
+
         private String leftInstruction, rightInstruction;
 
         public Builder(Context context) {
@@ -66,6 +69,7 @@ public class LivenessApp {
             this.isDebug = false;
             this.successText = context.getString(R.string.success_text);
             this.successText = context.getString(R.string.instructions);
+            this.blinkInstruction = context.getString(R.string.blink_instruction);
             this.leftInstruction = context.getString(R.string.motion_instruction_left);
             this.rightInstruction = context.getString(R.string.motion_instruction_right);
         }
@@ -85,6 +89,11 @@ public class LivenessApp {
             return this;
         }
 
+        public LivenessApp.Builder setBlinkInstructions(String blinkInstruction) {
+            this.blinkInstruction = blinkInstruction;
+            return this;
+        }
+
         public LivenessApp.Builder setMotionInstruction(String leftInstruction, String rightInstruction) {
             this.leftInstruction = leftInstruction;
             this.rightInstruction = rightInstruction;
@@ -93,7 +102,7 @@ public class LivenessApp {
 
         public LivenessApp build() {
             String[] motionInstructions = new String[]{leftInstruction, rightInstruction};
-            return new LivenessApp(context, isDebug, successText, instructions, motionInstructions);
+            return new LivenessApp(context, isDebug, successText, instructions, blinkInstruction, motionInstructions);
         }
 
     }

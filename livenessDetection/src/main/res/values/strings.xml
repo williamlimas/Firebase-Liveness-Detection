@@ -4,4 +4,5 @@
     <string name="instructions">Look at the camera and put your face on the circle</string>
     <string name="motion_instruction_left">Look to the left</string>
     <string name="motion_instruction_right">Look to the right</string>
+    <string name="blink_instruction">Blink your eyes</string>
 </resources>

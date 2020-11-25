@@ -64,9 +64,9 @@ class VisionDetectionProcessor : VisionProcessorBase<List<FirebaseVisionFace>>()
         detector = FirebaseVision.getInstance().getVisionFaceDetector(options)
     }
 
-    fun isSimpleLiveness(isSimpleLiveness: Boolean, context: Context, motion: Motion) {
+    fun isSimpleLiveness(isSimpleLiveness: Boolean, context: Context) {
         this.isSimpleLiveness = isSimpleLiveness
-        this.motion = motion
+//        this.motion = motion
     }
 
     fun isDebugMode(isDebug: Boolean) {
@@ -163,6 +163,7 @@ class VisionDetectionProcessor : VisionProcessorBase<List<FirebaseVisionFace>>()
     private fun processBlink(face: FirebaseVisionFace) {
         val left = face.leftEyeOpenProbability
         val right = face.rightEyeOpenProbability
+        Log.d("EYES", "processBlink: "+left + ", " +right)
         if (left == FirebaseVisionFace.UNCOMPUTED_PROBABILITY || right == FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
             // At least one of the eyes was not detected.
             return

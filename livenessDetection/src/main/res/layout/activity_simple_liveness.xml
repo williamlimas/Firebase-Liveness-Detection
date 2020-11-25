@@ -29,11 +29,26 @@
             android:scaleType="fitXY"
             android:background="@mipmap/background_selfie"/>
 
+
+    <TextView
+        android:id="@+id/blinkInstruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/blink_instruction"
+        android:layout_above="@id/motionInstruction"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="40dp"/>
+
     <TextView
             android:id="@+id/motionInstruction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/motion_instruction_left"
+            android:text="ikuti instruksi diatas"
             android:layout_above="@id/instructions"
             android:textColor="@android:color/white"
             android:textStyle="bold"
