@@ -199,5 +199,4 @@ class SimpleLivenessActivity : AppCompatActivity() {
             }, 500)
         }
     }
-
 }

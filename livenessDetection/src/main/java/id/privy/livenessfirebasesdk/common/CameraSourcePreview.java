@@ -123,13 +123,13 @@ public class CameraSourcePreview extends ViewGroup {
 //        int width = size_device.y;
 //        int height = size_device.x;
 
-        Camera camera=Camera.open();
-        Camera.Parameters params = camera.getParameters();
-        List sizes = params.getSupportedPictureSizes();
-        Camera.Size result = (Camera.Size) sizes.get(1);
-
-        int width = result.width;
-        int height = result.height;
+//        Camera camera=Camera.open();
+//        Camera.Parameters params = camera.getParameters();
+//        List sizes = params.getSupportedPictureSizes();
+//        Camera.Size result = (Camera.Size) sizes.get(1);
+//
+        int width = 720;
+        int height = 480;
 
         if (cameraSource != null) {
             Size size = cameraSource.getPreviewSize();
