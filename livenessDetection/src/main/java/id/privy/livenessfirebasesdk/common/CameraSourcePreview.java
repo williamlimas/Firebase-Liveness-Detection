@@ -3,15 +3,21 @@ package id.privy.livenessfirebasesdk.common;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
+import android.hardware.Camera;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.google.android.gms.common.images.Size;
 
 import java.io.IOException;
+import java.util.List;
 
 /** Preview the camera image in the screen. */
 public class CameraSourcePreview extends ViewGroup {
@@ -73,14 +79,14 @@ public class CameraSourcePreview extends ViewGroup {
             cameraSource.start();
             if (overlay != null) {
                 Size size = cameraSource.getPreviewSize();
-                int min = Math.min(size.getWidth(), size.getHeight());
-                int max = Math.max(size.getWidth(), size.getHeight());
+//                int min = Math.min(size.getWidth(), size.getHeight());
+//                int max = Math.max(size.getWidth(), size.getHeight());
                 if (isPortraitMode()) {
                     // Swap width and height sizes when in portrait, since it will be rotated by
                     // 90 degrees
-                    overlay.setCameraInfo(min, max, cameraSource.getCameraFacing());
+                    overlay.setCameraInfo(size.getWidth(), size.getHeight(), cameraSource.getCameraFacing());
                 } else {
-                    overlay.setCameraInfo(max, min, cameraSource.getCameraFacing());
+                    overlay.setCameraInfo(size.getHeight(), size.getWidth(), cameraSource.getCameraFacing());
                 }
                 overlay.clear();
             }
@@ -110,8 +116,21 @@ public class CameraSourcePreview extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int width = 320;
-        int height = 240;
+//        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        Display display = wm.getDefaultDisplay();
+//        Point size_device = new Point();
+//        display.getSize(size_device);
+//        int width = size_device.y;
+//        int height = size_device.x;
+
+        Camera camera=Camera.open();
+        Camera.Parameters params = camera.getParameters();
+        List sizes = params.getSupportedPictureSizes();
+        Camera.Size result = (Camera.Size) sizes.get(1);
+
+        int width = result.width;
+        int height = result.height;
+
         if (cameraSource != null) {
             Size size = cameraSource.getPreviewSize();
             if (size != null) {
