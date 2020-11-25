@@ -79,8 +79,8 @@ public class CameraSource {
     List sizes_list = params.getSupportedPictureSizes();
     Camera.Size result = (Camera.Size) sizes_list.get(1);
 
-    private final int requestedPreviewWidth = 720;
-    private final int requestedPreviewHeight = 480;
+    private final int requestedPreviewWidth = 320;
+    private final int requestedPreviewHeight = 240;
     private final boolean requestedAutoFocus = true;
 
     // These instances need to be held onto to avoid GC of their underlying resources.  Even though

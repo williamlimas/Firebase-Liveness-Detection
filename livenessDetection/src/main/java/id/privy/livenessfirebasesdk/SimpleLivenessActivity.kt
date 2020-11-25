@@ -196,7 +196,7 @@ class SimpleLivenessActivity : AppCompatActivity() {
                 cameraSource!!.takePicture(null, com.google.android.gms.vision.CameraSource.PictureCallback {
                     navigateBack(true, BitmapFactory.decodeByteArray(it, 0, it.size))
                 })
-            }, 500)
+            }, 300)
         }
     }
 }

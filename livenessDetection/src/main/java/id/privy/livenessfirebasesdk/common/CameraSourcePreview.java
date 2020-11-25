@@ -128,8 +128,8 @@ public class CameraSourcePreview extends ViewGroup {
 //        List sizes = params.getSupportedPictureSizes();
 //        Camera.Size result = (Camera.Size) sizes.get(1);
 //
-        int width = 720;
-        int height = 480;
+        int width = 480;
+        int height = 360;
 
         if (cameraSource != null) {
             Size size = cameraSource.getPreviewSize();
