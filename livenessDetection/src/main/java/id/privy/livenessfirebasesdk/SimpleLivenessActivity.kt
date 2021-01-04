@@ -4,18 +4,18 @@ import android.Manifest
 import android.arch.lifecycle.Observer
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.support.v7.app.AppCompatActivity
+import android.graphics.Camera
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
+import android.view.TextureView
 import id.privy.livenessfirebasesdk.common.*
 import id.privy.livenessfirebasesdk.event.LivenessEventProvider
 import id.privy.livenessfirebasesdk.vision.VisionDetectionProcessor
-import id.privy.livenessfirebasesdk.vision.VisionDetectionProcessor.Motion
 import kotlinx.android.synthetic.main.activity_simple_liveness.*
 import java.io.IOException
-import java.util.*
+
 
 class SimpleLivenessActivity : AppCompatActivity() {
 
@@ -36,6 +36,9 @@ class SimpleLivenessActivity : AppCompatActivity() {
     private var isDebug = false
 
     private lateinit var motionInstructions: Array<String>
+
+    private val mCamera: Camera? = null
+    private val mTextureView: TextureView? = null
 
     private var count_ver = 0;
 
